@@ -13,6 +13,7 @@ public interface MyBooks {
     public Books getBookByNo(int book_no);
 
 
+    public Coupons getCouponByNo(int coupon_no);
     public Books addNewBook(Books book);
     public Users addNewUser(Users user);
     public Coupons addNewCoupon(Coupons coupon);

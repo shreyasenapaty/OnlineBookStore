@@ -43,6 +43,12 @@ public class MyBooksimpl implements MyBooks{
 
 
 
+    public Coupons getCouponByNo(int coupon_no) {
+        Optional<Coupons> coupon=cdao.findById(coupon_no);
+        return coupon.get();
+    }
+
+
     public Books addNewBook(Books book) {
         return null;
     }
@@ -54,7 +60,7 @@ public class MyBooksimpl implements MyBooks{
 
 
     public Coupons addNewCoupon(Coupons coupon) {
-        return null;
+        return cdao.save(coupon);
     }
 
 
