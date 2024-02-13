@@ -1,6 +1,7 @@
 package com.books.controller;
 
 import com.books.model.Books;
+import com.books.model.Coupons;
 import com.books.model.Users;
 import com.books.service.MyBooks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class BooksController {
     @RequestMapping(value="/users",method= RequestMethod.GET)
     public List<Users> getUsers(){
         return service.showUsers();
+    }
+    @RequestMapping(value="/coupons",method= RequestMethod.GET)
+    public List<Coupons> getCoupons(){
+        return service.showCoupons();
     }
 
 }

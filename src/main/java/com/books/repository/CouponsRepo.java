@@ -1,9 +1,11 @@
 package com.books.repository;
 
-import com.books.model.Users;
+
+
+import com.books.model.Coupons;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsersRepo extends JpaRepository<Users,String> {
+public interface CouponsRepo extends JpaRepository<Coupons,Integer> {
 }
