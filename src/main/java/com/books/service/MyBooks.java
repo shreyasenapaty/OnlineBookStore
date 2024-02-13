@@ -11,7 +11,7 @@ public interface MyBooks {
     public List<Coupons> showCoupons();
 
     public Books getBookByNo(int book_no);
-
+    public Optional<Users> getUserByName(String username);
 
     public Coupons getCouponByNo(int coupon_no);
     public Books addNewBook(Books book);

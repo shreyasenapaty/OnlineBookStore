@@ -4,12 +4,13 @@ import com.books.model.Books;
 import com.books.model.Coupons;
 import com.books.model.Users;
 import com.books.repository.BooksRepo;
-import java.util.*;
-
 import com.books.repository.CouponsRepo;
 import com.books.repository.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MyBooksimpl implements MyBooks{
@@ -39,23 +40,25 @@ public class MyBooksimpl implements MyBooks{
         return book.get();
     }
 
-
-
+    public Optional<Users> getUserByName(String username) {
+        return udao.findById(username);
+    }
 
 
     public Coupons getCouponByNo(int coupon_no) {
         Optional<Coupons> coupon=cdao.findById(coupon_no);
+
         return coupon.get();
     }
 
 
     public Books addNewBook(Books book) {
-        return null;
+        return dao.save(book);
     }
 
 
     public Users addNewUser(Users user) {
-        return null;
+        return udao.save(user);
     }
 
 
