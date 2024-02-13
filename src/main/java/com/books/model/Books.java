@@ -17,8 +17,19 @@ public class Books {
     @Column
     private float price;
 
+    @Column
+    private int inventory;
+
     public double getPrice() {
         return price;
+    }
+
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
     }
 
     public void setPrice(float price) {

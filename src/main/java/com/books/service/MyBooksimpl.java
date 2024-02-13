@@ -32,4 +32,35 @@ public class MyBooksimpl implements MyBooks{
     public List<Coupons> showCoupons() {
         return cdao.findAll();
     }
+
+
+    public Books getBookByNo(int book_no) {
+        Optional<Books> book=dao.findById(book_no);
+        return book.get();
+    }
+
+
+
+
+
+    public Books addNewBook(Books book) {
+        return null;
+    }
+
+
+    public Users addNewUser(Users user) {
+        return null;
+    }
+
+
+    public Coupons addNewCoupon(Coupons coupon) {
+        return null;
+    }
+
+
+    public Users deleteUserByName(String User) {
+        return null;
+    }
+
+
 }

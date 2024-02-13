@@ -36,11 +36,11 @@ public class Coupons {
         this.price = price;
     }
 
-    public java.sql.Date getExpiry_date() {
+    public Date getExpiry_date() {
         return expiry_date;
     }
 
-    public void setExpiry_date(java.sql.Date expiry_date) {
+    public void setExpiry_date(Date expiry_date) {
         this.expiry_date = expiry_date;
     }
 }

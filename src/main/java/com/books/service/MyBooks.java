@@ -9,4 +9,12 @@ public interface MyBooks {
     public List<Books> showBooks();
     public List<Users> showUsers();
     public List<Coupons> showCoupons();
+
+    public Books getBookByNo(int book_no);
+
+
+    public Books addNewBook(Books book);
+    public Users addNewUser(Users user);
+    public Coupons addNewCoupon(Coupons coupon);
+    public Users deleteUserByName(String User);
 }
