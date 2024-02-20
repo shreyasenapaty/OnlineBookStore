@@ -64,14 +64,24 @@ public class BooksController {
             return ("You are not admin");
         }
     }
-    @RequestMapping(value="/{username}/transfer/{id}", method=RequestMethod.PUT)
-    public Object Transfer(@PathVariable String username, @PathVariable int id, @RequestBody String newuser) throws Exception {
-        return service.updateCoupon(newuser, id);
+    @RequestMapping(value="/{username}/transfer/{couponno}", method=RequestMethod.PUT)
+    public Object Transfer(@PathVariable String username, @PathVariable Integer couponno) throws Exception {
+        if (GetUser(username)==null){
+            return ("This user doesn't exist");
+        }
+        else{return service.updateCoupon(username, couponno);}
     }
 
     @RequestMapping(value="/coupon/{username}", method=RequestMethod.GET)
     public Object SelectCoupon(@PathVariable String username) throws Exception {
         return service.selectcoupon(username);
+    }
+
+    @RequestMapping(value="/{username}/{bookname}", method=RequestMethod.GET)
+    public Object BuyBook(@PathVariable String username, @PathVariable String bookname) throws Exception {
+        Users user=GetUser(username);
+        Object coup= SelectCoupon(username);
+        return null;
     }
 
 }

@@ -72,8 +72,8 @@ public class MyBooksimpl implements MyBooks{
     }
 
 
-    public Integer updateCoupon(String user, int coupon_no) {
-        return null;
+    public Integer updateCoupon(String user, Integer coupon_no) {
+        return cdao.UpdateCoupon(user, coupon_no);
     }
 
     @Override
