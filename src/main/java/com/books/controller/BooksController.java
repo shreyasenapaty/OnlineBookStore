@@ -56,16 +56,22 @@ public class BooksController {
     }
 
     @RequestMapping(value="/{username}/add/book", method=RequestMethod.POST)
-    public Object AddBook(@PathVariable String username, @RequestBody Books book) throws Exception{
-        Users user1=GetUser(username);
-        if (Objects.equals(user1.getType(), "admin")){
+    public Object AddBook(@PathVariable String username, @RequestBody Books book) throws Exception {
+        Users user1 = GetUser(username);
+        if (Objects.equals(user1.getType(), "admin")) {
             return service.addNewBook(book);
+        } else {
+            return ("You are not admin");
         }
-        else {
-            return("You are not admin");
-        }
+    }
+    @RequestMapping(value="/{username}/transfer/{id}", method=RequestMethod.PUT)
+    public Object Transfer(@PathVariable String username, @PathVariable int id, @RequestBody String newuser) throws Exception {
+        return service.updateCoupon(newuser, id);
+    }
 
-
-
+    @RequestMapping(value="/coupon/{username}", method=RequestMethod.GET)
+    public Object SelectCoupon(@PathVariable String username) throws Exception {
+        return service.selectcoupon(username);
+    }
 
 }

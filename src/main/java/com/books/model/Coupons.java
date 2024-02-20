@@ -19,6 +19,16 @@ public class Coupons {
     @Column
     private Date expiry_date;
 
+    @Column
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getCoupon_no() {
         return coupon_no;

@@ -18,4 +18,7 @@ public interface MyBooks {
     public Users addNewUser(Users user);
     public Coupons addNewCoupon(Coupons coupon);
     public Users deleteUserByName(String User);
+
+    public Integer updateCoupon(String user, int coupon_no);
+    public List<Coupons> selectcoupon(String user);
 }

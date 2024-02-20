@@ -72,4 +72,14 @@ public class MyBooksimpl implements MyBooks{
     }
 
 
+    public Integer updateCoupon(String user, int coupon_no) {
+        return null;
+    }
+
+    @Override
+    public List<Coupons> selectcoupon(String user) {
+        return cdao.updateCoupon(user);
+    }
+
+
 }
