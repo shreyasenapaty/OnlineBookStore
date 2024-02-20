@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CouponsRepo extends JpaRepository<Coupons,Integer> {
 
-    @Query(value = "select coupons u where u.username = ?",
+    @Query(value = "select * from coupons u where u.username = ?",
             nativeQuery = true)
-    List<Coupons> updateCoupon(@Param("username") String username);
+    List<Coupons> selectCoupon(@Param("username") String username);
 }

@@ -78,7 +78,7 @@ public class MyBooksimpl implements MyBooks{
 
     @Override
     public List<Coupons> selectcoupon(String user) {
-        return cdao.updateCoupon(user);
+        return cdao.selectCoupon(user);
     }
 
 
