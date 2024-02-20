@@ -35,9 +35,8 @@ public class MyBooksimpl implements MyBooks{
     }
 
 
-    public Books getBookByNo(int book_no) {
-        Optional<Books> book=dao.findById(book_no);
-        return book.get();
+    public Optional<Books> getBookByName(String bookname) {
+        return dao.findById(bookname);
     }
 
     public Optional<Users> getUserByName(String username) {

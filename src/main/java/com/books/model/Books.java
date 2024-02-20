@@ -9,9 +9,6 @@ import jakarta.persistence.Table;
 @Table(name="books")
 public class Books {
     @Id
-    private int book_no;
-
-    @Column
     private String bookname;
 
     @Column
@@ -19,6 +16,9 @@ public class Books {
 
     @Column
     private int inventory;
+
+    @Column
+    private String authorname;
 
     public double getPrice() {
         return price;
@@ -38,16 +38,16 @@ public class Books {
 
 
 
-    public int getBook_no() {
-        return book_no;
-    }
-
-    public void setBook_no(int book_no) {
-        this.book_no = book_no;
-    }
-
     public String getBookname() {
         return bookname;
+    }
+
+    public String getAuthorname() {
+        return authorname;
+    }
+
+    public void setAuthorname(String authorname) {
+        this.authorname = authorname;
     }
 
     public void setBookname(String bookname) {

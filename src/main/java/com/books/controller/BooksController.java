@@ -31,10 +31,10 @@ public class BooksController {
         return service.showCoupons();
     }
 
-    @RequestMapping(value="/books/{book_no}", method=RequestMethod.GET)
-    public Books GetBookbyBookNo(@PathVariable int book_no) throws Exception{
-        Books book= service.getBookByNo(book_no);
-        return book;
+    @RequestMapping(value="/books/{book_name}", method=RequestMethod.GET)
+    public Books GetBookbyName(@PathVariable String book_name) throws Exception{
+        Optional<Books> book= service.getBookByName(book_name);
+        return book.get();
     }
 
     @RequestMapping(value="/{username}", method=RequestMethod.GET)
@@ -73,14 +73,18 @@ public class BooksController {
     }
 
     @RequestMapping(value="/coupon/{username}", method=RequestMethod.GET)
-    public Object SelectCoupon(@PathVariable String username) throws Exception {
+    public List<Coupons> SelectCoupon(@PathVariable String username) throws Exception {
         return service.selectcoupon(username);
     }
 
-    @RequestMapping(value="/{username}/{bookname}", method=RequestMethod.GET)
+    @RequestMapping(value="/buy/{username}/{bookname}", method=RequestMethod.GET)
     public Object BuyBook(@PathVariable String username, @PathVariable String bookname) throws Exception {
-        Users user=GetUser(username);
-        Object coup= SelectCoupon(username);
+        Optional<Users> user=service.getUserByName(username);
+        Books book= GetBookbyName(bookname);
+        List<Coupons> coup= SelectCoupon(username);
+
+
+
         return null;
     }
 

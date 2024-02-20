@@ -10,7 +10,7 @@ public interface MyBooks {
     public List<Users> showUsers();
     public List<Coupons> showCoupons();
 
-    public Books getBookByNo(int book_no);
+    public Optional<Books> getBookByName(String bookname);
     public Optional<Users> getUserByName(String username);
 
     public Coupons getCouponByNo(int coupon_no);
