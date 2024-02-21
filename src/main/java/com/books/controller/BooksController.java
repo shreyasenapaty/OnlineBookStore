@@ -2,12 +2,17 @@ package com.books.controller;
 
 import com.books.model.Books;
 import com.books.model.Coupons;
+import com.books.model.Purchase;
 import com.books.model.Users;
 import com.books.service.MyBooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 public class BooksController {
@@ -29,6 +34,10 @@ public class BooksController {
     @RequestMapping(value="/coupons",method= RequestMethod.GET)
     public List<Coupons> getCoupons(){
         return service.showCoupons();
+    }
+    @RequestMapping(value="/purchases",method= RequestMethod.GET)
+    public List<Purchase> getPurchases(){
+        return service.showPurchase();
     }
 
     @RequestMapping(value="/books/{book_name}", method=RequestMethod.GET)
@@ -82,10 +91,43 @@ public class BooksController {
         Optional<Users> user=service.getUserByName(username);
         Books book= GetBookbyName(bookname);
         List<Coupons> coup= SelectCoupon(username);
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        if (book.getInventory()==0){
+            return ("Book is out of stock");
+        }
+        else{
+            service.addNewPurchase(username, bookname);
+            Integer inventory= book.getInventory()-1;
+            service.updateInventory(inventory,bookname);
+            Double price= book.getPrice();
+            int len= coup.size();
+            Double value= 0.00;
+            Double leftover_price=0.00;
+            for(int i=0; i<len; i++) {
+                 value += coup.get(i).getLeftover_price();
+            }
+            if (value>price){
+                while(price>0){
+                    int i=0;
+                    if (price<coup.get(i).getPrice()){
+                        leftover_price= coup.get(i).getLeftover_price()- price;
+                        price=0.00;
+                    }
+                    else{
+                        price= price - coup.get(i).getLeftover_price();
+                        leftover_price= 0.00;
+                    }
+                    service.updatePrice(leftover_price, coup.get(i).getCoupon_no());
+
+                }
+                return null;
+            }
+            else{
+                return ("Not enough coupons");
+            }
+        }
 
 
-
-        return null;
     }
 
 }

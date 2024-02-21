@@ -15,7 +15,7 @@ public class Books {
     private float price;
 
     @Column
-    private int inventory;
+    private Integer inventory;
 
     @Column
     private String authorname;
@@ -24,11 +24,11 @@ public class Books {
         return price;
     }
 
-    public int getInventory() {
+    public Integer getInventory() {
         return inventory;
     }
 
-    public void setInventory(int inventory) {
+    public void setInventory(Integer inventory) {
         this.inventory = inventory;
     }
 

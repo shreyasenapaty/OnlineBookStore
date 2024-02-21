@@ -22,6 +22,17 @@ public class Coupons {
     @Column
     private String username;
 
+    @Column
+    private Double leftover_price;
+
+    public Double getLeftover_price() {
+        return leftover_price;
+    }
+
+    public void setLeftover_price(Double leftover_price) {
+        this.leftover_price = leftover_price;
+    }
+
     public String getUsername() {
         return username;
     }
