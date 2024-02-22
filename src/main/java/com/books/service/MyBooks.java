@@ -4,6 +4,7 @@ import com.books.model.Coupons;
 import com.books.model.Purchase;
 import com.books.model.Users;
 
+import java.sql.Date;
 import java.util.*;
 
 public interface MyBooks {
@@ -21,8 +22,10 @@ public interface MyBooks {
     public Coupons addNewCoupon(Coupons coupon);
     public Users deleteUserByName(String User);
     public Integer updatePrice(Double leftover_price, Integer coupon_no);
-    public Integer addNewPurchase(String username, String bookname);
+    public Integer addNewPurchase(String username, String bookname, Date purchase_date);
+    public Integer addCouponHistory(Integer coupon_no, Double value, Date date);
     public Integer updateCoupon(String user, Integer coupon_no);
+    public Integer updateStatus(String status, Integer coupon_no);
     public Integer updateInventory(Integer inventory, String bookname);
     public List<Coupons> selectcoupon(String user);
 }

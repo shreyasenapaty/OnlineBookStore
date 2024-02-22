@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+
 @Repository
 public interface CouponsHistoryRepo extends JpaRepository<CouponHistory,Integer> {
     @Transactional
     @Modifying
-    @Query(value="insert into coupon_history (coupon_no,value) values (?,?) ", nativeQuery = true)
-    int UpdateCoupHistory(Integer coupon_no, Double value);
+    @Query(value="insert into coupon_history (coupon_no,value,date_used) values (?,?,?) ", nativeQuery = true)
+    int UpdateCoupHistory(Integer coupon_no, Double value, Date date_used);
 
     @Transactional
     @Modifying

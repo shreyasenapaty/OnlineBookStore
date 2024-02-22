@@ -23,6 +23,9 @@ public class Coupons {
     private String username;
 
     @Column
+    private String status;
+
+    @Column
     private Double leftover_price;
 
     public Double getLeftover_price() {
@@ -35,6 +38,14 @@ public class Coupons {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setUsername(String username) {

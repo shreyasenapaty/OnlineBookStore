@@ -4,13 +4,11 @@ import com.books.model.Books;
 import com.books.model.Coupons;
 import com.books.model.Purchase;
 import com.books.model.Users;
-import com.books.repository.BooksRepo;
-import com.books.repository.CouponsRepo;
-import com.books.repository.PurchaseRepo;
-import com.books.repository.UsersRepo;
+import com.books.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +23,9 @@ public class MyBooksimpl implements MyBooks{
 
     @Autowired
     PurchaseRepo pdao;
+
+    @Autowired
+    CouponsHistoryRepo chdao;
     public List<Books> showBooks() {
         return dao.findAll();
     }
@@ -85,9 +86,14 @@ public class MyBooksimpl implements MyBooks{
         return cdao.UpdatePrice(leftover_price, coupon_no);
     }
 
+
+    public Integer addNewPurchase(String username, String bookname, Date purchase_date) {
+        return pdao.UpdatePurchase(username, bookname, purchase_date);
+    }
+
     @Override
-    public Integer addNewPurchase(String username, String bookname) {
-        return pdao.UpdatePurchase(username, bookname);
+    public Integer addCouponHistory(Integer coupon_no, Double value, Date date) {
+        return chdao.UpdateCoupHistory(coupon_no,value,date);
     }
 
 
@@ -96,6 +102,11 @@ public class MyBooksimpl implements MyBooks{
     }
 
     @Override
+    public Integer updateStatus(String status, Integer coupon_no) {
+        return cdao.UpdateStatus(status, coupon_no);
+    }
+
+
     public Integer updateInventory(Integer inventory, String bookname) {
         return dao.UpdateInventory(inventory, bookname);
     }

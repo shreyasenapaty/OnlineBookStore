@@ -19,6 +19,11 @@ public interface CouponsRepo extends JpaRepository<Coupons,Integer> {
     @Query(value="update coupons set username= ? where coupon_no= ?", nativeQuery = true)
     int UpdateCoupon(String username,Integer coupon_no);
 
+    @Transactional
+    @Modifying
+    @Query(value="update coupons set status= ? where coupon_no= ?", nativeQuery = true)
+    int UpdateStatus(String status,Integer coupon_no);
+
 
     @Query(value = "select * from coupons u where u.username = ? order by expiry_date asc",
             nativeQuery = true)
