@@ -22,15 +22,16 @@ public class CouponsController {
         return service.showCoupons();
     }
 
-    @RequestMapping(value="/coupon/{username}", method=RequestMethod.GET)
+    @RequestMapping(value="/coupons/{username}", method=RequestMethod.GET)
     public List<Coupons> SelectCoupon(@PathVariable String username) throws Exception {
         return service.selectcoupon(username);
     }
 
-    @RequestMapping(value="/{username}/add/coupon", method=RequestMethod.POST)
+    @RequestMapping(value="/coupons/add/{username}", method=RequestMethod.POST)
     public Object AddCoupon(@PathVariable String username, @RequestBody Coupons coupon) throws Exception{
         Users user1=users.GetUser(username);
         if (Objects.equals(user1.getType(), "admin")){
+            coupon.setLeftover_price(coupon.getPrice());
             return service.addNewCoupon(coupon);
         }
         else {
@@ -39,7 +40,7 @@ public class CouponsController {
 
     }
 
-    @RequestMapping(value="/{username}/transfer/{couponno}", method=RequestMethod.PUT)
+    @RequestMapping(value="/coupons/transfer/{username}/{couponno}", method=RequestMethod.PUT)
     public Object Transfer(@PathVariable String username, @PathVariable Integer couponno) throws Exception {
         if (users.GetUser(username)==null){
             return ("This user doesn't exist");

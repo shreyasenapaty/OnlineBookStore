@@ -23,52 +23,48 @@ public class PurchaseController {
         return service.showPurchase();
     }
 
-    @RequestMapping(value="/buy/{username}/{bookname}", method= RequestMethod.GET)
+    @RequestMapping(value="/purchase/{username}/{bookname}", method= RequestMethod.GET)
     public Object BuyBook(@PathVariable String username, @PathVariable String bookname) throws Exception {
-        Optional<Books> opbook= service.getBookByName(bookname);
-        Books book= opbook.get();
-        List<Coupons> coup= service.selectcoupon(username);
+        Optional<Books> opbook = service.getBookByName(bookname);
+        Books book = opbook.get();
+        List<Coupons> coup = service.selectcoupon(username);
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
         System.out.println(date);
-        if (book.getInventory()==0){
+        if (book.getInventory() == 0) {
             return ("Book is out of stock");
-        }
-        else{
-            Double price= book.getPrice();
-            int len= coup.size();
-            Double value= 0.00;
-            Double leftover_price=0.00;
-            for(int i=0; i<len; i++) {
-                if (date.before(coup.get(i).getExpiry_date())){
-                    service.updateStatus("active",coup.get(i).getCoupon_no());
+        } else {
+            Double price = book.getPrice();
+            int len = coup.size();
+            Double value = 0.00;
+            Double leftover_price = 0.00;
+            for (int i = 0; i < len; i++) {
+                if (date.before(coup.get(i).getExpiry_date())) {
+                    service.updateStatus("active", coup.get(i).getCoupon_no());
                     value += coup.get(i).getLeftover_price();
-                }
-                else {
-                    service.updateStatus("expired",coup.get(i).getCoupon_no());
+                } else {
+                    service.updateStatus("expired", coup.get(i).getCoupon_no());
                 }
                 System.out.println(value);
             }
 
-            if (value<price){
+            if (value < price) {
                 return ("Not enough coupons");
-            }
-            else{
+            } else {
                 service.addNewPurchase(username, bookname, date);
-                Integer inventory= book.getInventory()-1;
-                service.updateInventory(inventory,bookname);
+                Integer inventory = book.getInventory() - 1;
+                service.updateInventory(inventory, bookname);
                 int i = 0;
                 do {
                     if (price < coup.get(i).getLeftover_price()) {
                         leftover_price = coup.get(i).getLeftover_price() - price;
                         price = 0.00;
-                    }
-                    else if (price> coup.get(i).getLeftover_price()) {
+                    } else if (price > coup.get(i).getLeftover_price()) {
                         price = price - coup.get(i).getLeftover_price();
                         leftover_price = 0.00;
                     }
                     service.updatePrice(leftover_price, coup.get(i).getCoupon_no());
-                    service.addCouponHistory(coup.get(i).getCoupon_no(),leftover_price, date);
+                    service.addCouponHistory(coup.get(i).getCoupon_no(), coup.get(i).getPrice()-leftover_price, date);
                     i++;
                 } while (price > 0);
 

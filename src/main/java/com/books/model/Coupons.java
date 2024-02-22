@@ -14,7 +14,7 @@ public class Coupons {
     private int coupon_no;
 
     @Column
-    private float price;
+    private Double price;
 
     @Column
     private Date expiry_date;
@@ -60,11 +60,11 @@ public class Coupons {
         this.coupon_no = coupon_no;
     }
 
-    public float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

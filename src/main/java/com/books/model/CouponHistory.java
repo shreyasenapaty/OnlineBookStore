@@ -11,13 +11,23 @@ import java.sql.Date;
 @Table(name="coupon-history")
 public class CouponHistory {
     @Id
+    private int c_id;
+    @Column
     private int coupon_no;
     @Column
-    private int p_id;
+    private Integer p_id;
     @Column
     private float value;
     @Column
     private Date date_used;
+
+    public int getC_id() {
+        return c_id;
+    }
+
+    public void setC_id(int c_id) {
+        this.c_id = c_id;
+    }
 
     public int getCoupon_no() {
         return coupon_no;
@@ -27,11 +37,11 @@ public class CouponHistory {
         this.coupon_no = coupon_no;
     }
 
-    public int getP_id() {
+    public Integer getP_id() {
         return p_id;
     }
 
-    public void setP_id(int p_id) {
+    public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
 

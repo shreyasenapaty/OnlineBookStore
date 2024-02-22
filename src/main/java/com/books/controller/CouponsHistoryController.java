@@ -1,6 +1,6 @@
 package com.books.controller;
 
-import com.books.model.Users;
+import com.books.model.CouponHistory;
 import com.books.service.MyBooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,22 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-public class UserController {
+public class CouponsHistoryController {
     @Autowired
     MyBooks service;
 
-    @RequestMapping(value="/users",method= RequestMethod.GET)
-    public List<Users> getUsers(){
-        return service.showUsers();
+    @RequestMapping(value="/couponhistory",method= RequestMethod.GET)
+    public List<CouponHistory> getUsers(){
+        return service.showHistory();
     }
 
-    @RequestMapping(value="/users/{username}", method=RequestMethod.GET)
-    public Users GetUser(@PathVariable String username) throws Exception {
-        Optional<Users> user = service.getUserByName(username);
-        return user.get();
+    @RequestMapping(value="/couponhistory/{coupon_no}", method=RequestMethod.GET)
+    public List<CouponHistory> GetCouponHistory(@PathVariable int coupon_no) throws Exception {
+        return service.selectcouponhistory(coupon_no);
     }
 
 }

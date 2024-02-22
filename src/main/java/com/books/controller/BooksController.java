@@ -16,10 +16,6 @@ public class BooksController {
     MyBooks service;
     @Autowired
     UserController users;
-    @RequestMapping(value="/hi",method= RequestMethod.GET)
-    public String Hello(){
-        return ("Hello");
-    }
 
     @RequestMapping(value="/books",method= RequestMethod.GET)
     public List<Books> getBooks(){
@@ -32,7 +28,7 @@ public class BooksController {
         return book.get();
     }
 
-    @RequestMapping(value="/{username}/add/book", method=RequestMethod.POST)
+    @RequestMapping(value="/book/add/{username}", method=RequestMethod.POST)
     public Object AddBook(@PathVariable String username, @RequestBody Books book) throws Exception {
         Users user1 = users.GetUser(username);
         if (Objects.equals(user1.getType(), "admin")) {

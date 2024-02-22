@@ -34,4 +34,5 @@ public interface CouponsRepo extends JpaRepository<Coupons,Integer> {
     @Query(value="update coupons set leftover_price= ? where coupon_no= ?", nativeQuery = true)
     int UpdatePrice(Double leftover_price, int coupon_no);
 
+
 }

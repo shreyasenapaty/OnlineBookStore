@@ -1,9 +1,6 @@
 package com.books.service;
 
-import com.books.model.Books;
-import com.books.model.Coupons;
-import com.books.model.Purchase;
-import com.books.model.Users;
+import com.books.model.*;
 import com.books.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +40,11 @@ public class MyBooksimpl implements MyBooks{
     @Override
     public List<Purchase> showPurchase() {
         return pdao.findAll();
+    }
+
+    @Override
+    public List<CouponHistory> showHistory() {
+        return chdao.findAll();
     }
 
 
@@ -114,6 +116,11 @@ public class MyBooksimpl implements MyBooks{
 
     public List<Coupons> selectcoupon(String user) {
         return cdao.selectCoupon(user);
+    }
+
+    @Override
+    public List<CouponHistory> selectcouponhistory(int coupon_no) {
+        return chdao.selectCouponHistory(coupon_no);
     }
 
 
