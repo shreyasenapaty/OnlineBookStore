@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.sql.Date;
 
 @Entity
-@Table(name="coupon-history")
+@Table(name = "coupon_history")
 public class CouponHistory {
     @Id
     private int c_id;
