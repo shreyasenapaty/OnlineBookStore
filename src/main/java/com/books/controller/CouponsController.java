@@ -1,50 +1,49 @@
 package com.books.controller;
 
-import com.books.model.Coupons;
-import com.books.model.Users;
-import com.books.service.MyBooks;
+
+import com.books.model.*;
+import com.books.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 public class CouponsController {
     @Autowired
-    MyBooks service;
-
+    CouponsService couponservice;
     @Autowired
-    UserController users;
+    UsersService userservice;
 
-    @RequestMapping(value="/coupons",method= RequestMethod.GET)
-    public List<Coupons> getCoupons(){
-        return service.showCoupons();
+    @RequestMapping(value = "/coupons", method = RequestMethod.GET)
+    public List<Coupons> getCoupons() {
+        return couponservice.showCoupons();
     }
 
-    @RequestMapping(value="/coupons/{username}", method=RequestMethod.GET)
-    public List<Coupons> SelectCoupon(@PathVariable String username) throws Exception {
-        return service.selectcoupon(username);
+    @RequestMapping(value = "/coupons/{username}", method = RequestMethod.GET)
+    public List<Coupons> selectCoupon(@PathVariable String username) throws Exception {
+        return couponservice.selectcoupon(username);
     }
 
-    @RequestMapping(value="/coupons/add/{username}", method=RequestMethod.POST)
-    public Object AddCoupon(@PathVariable String username, @RequestBody Coupons coupon) throws Exception{
-        Users user1=users.GetUser(username);
-        if (Objects.equals(user1.getType(), "admin")){
+    @RequestMapping(value = "/coupons/add/{username}", method = RequestMethod.POST)
+    public Object addCoupon(@PathVariable String username, @RequestBody Coupons coupon) throws Exception {
+        Optional<Users> user = userservice.getUserByName(username);
+        Users user1 = user.get();
+        if (user1.getType().equals("admin")) {
             coupon.setLeftover_price(coupon.getPrice());
-            return service.addNewCoupon(coupon);
-        }
-        else {
-            return("You are not admin");
+            return couponservice.addNewCoupon(coupon);
+        } else {
+            return ("You are not admin");
         }
 
     }
 
-    @RequestMapping(value="/coupons/transfer/{username}/{couponno}", method=RequestMethod.PUT)
-    public Object Transfer(@PathVariable String username, @PathVariable Integer couponno) throws Exception {
-        if (users.GetUser(username)==null){
-            return ("This user doesn't exist");
-        }
-        else{return service.updateCoupon(username, couponno);}
+    @RequestMapping(value = "/coupons/transfer/{username}/{couponno}", method = RequestMethod.PUT)
+    public Coupons transfer(@PathVariable String username, @PathVariable Integer couponno) throws Exception {
+        Optional<Users> user = userservice.getUserByName(username);
+        Users user1 = user.get();
+        couponservice.updateCoupon(username, couponno);
+        return couponservice.getCouponByNo(couponno);
     }
 }

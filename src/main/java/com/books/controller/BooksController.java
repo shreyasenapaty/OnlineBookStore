@@ -1,43 +1,42 @@
 package com.books.controller;
 
-import com.books.model.Books;
-import com.books.model.Users;
-import com.books.service.MyBooks;
+import com.books.model.*;
+import com.books.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 public class BooksController {
     @Autowired
-    MyBooks service;
+    BooksService bookservice;
     @Autowired
-    UserController users;
+    UsersService userservice;
 
     @RequestMapping(value = "/books", method = RequestMethod.GET)
-    public List<Books> getBooks() {
-        return service.showBooks();
+    public List<com.books.model.Books> getBooks() {
+        return bookservice.showBooks();
     }
 
     @RequestMapping(value = "/books/{book_name}", method = RequestMethod.GET)
-    public Books GetBookbyName(@PathVariable String book_name) throws Exception {
-        Optional<Books> book = service.getBookByName(book_name);
+    public com.books.model.Books getBookbyName(@PathVariable String book_name) throws Exception {
+        Optional<com.books.model.Books> book = bookservice.getBookByName(book_name);
         return book.get();
     }
 
     @RequestMapping(value = "/book/add/{username}", method = RequestMethod.POST)
-    public Object AddBook(@PathVariable String username, @RequestBody Books book) throws Exception {
-        Users user1 = users.GetUser(username);
-        Books oldbook = GetBookbyName(book.getBookname());
-        if (Objects.equals(user1.getType(), "admin")) {
+    public Object addBook(@PathVariable String username, @RequestBody com.books.model.Books book) throws Exception {
+        Optional<Users> user = userservice.getUserByName(username);
+        Users user1 = user.get();
+        Books oldbook = getBookbyName(book.getBookname());
+        if (user1.getType().equals("admin")) {
             if (oldbook == null) {
-                return service.addNewBook(book);
+                return bookservice.addNewBook(book);
             } else {
-                service.updateInventory(oldbook.getInventory() + book.getInventory(), book.getBookname());
-                return GetBookbyName(oldbook.getBookname());
+                bookservice.updateInventory(oldbook.getInventory() + book.getInventory(), book.getBookname());
+                return getBookbyName(oldbook.getBookname());
             }
         } else {
             return ("You are not admin");
