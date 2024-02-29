@@ -3,10 +3,12 @@ package com.books.service;
 import com.books.model.Users;
 import com.books.repository.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class Usersimpl implements UsersService {
     @Autowired
     UsersRepo udao;
@@ -19,8 +21,9 @@ public class Usersimpl implements UsersService {
         return udao.findAll();
     }
 
-    public Optional<Users> getUserByName(String username) {
-        return udao.findById(username);
+    public Users getUserByName(String username) {
+        Optional<Users> user = udao.findById(username);
+        return user.get();
     }
 
     public Users deleteUserByName(String User) {

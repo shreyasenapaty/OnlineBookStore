@@ -1,6 +1,6 @@
 package com.books.service;
 
-import com.books.model.Purchase;
+import com.books.model.Books;
 import com.books.repository.BooksRepo;
 import com.books.repository.PurchaseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ public class Booksimpl implements BooksService {
     }
 
 
-    public Optional<com.books.model.Books> getBookByName(String bookname) {
-        return dao.findById(bookname);
+    public Books getBookByName(String bookname) {
+        return dao.BookbyName(bookname);
     }
 
     public com.books.model.Books addNewBook(com.books.model.Books book) {

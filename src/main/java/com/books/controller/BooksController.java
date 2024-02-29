@@ -1,12 +1,15 @@
 package com.books.controller;
 
-import com.books.model.*;
-import com.books.service.*;
+import com.books.exceptions.UserNotAdminException;
+import com.books.model.Books;
+import com.books.model.Users;
+import com.books.service.BooksService;
+import com.books.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class BooksController {
@@ -16,22 +19,20 @@ public class BooksController {
     UsersService userservice;
 
     @RequestMapping(value = "/books", method = RequestMethod.GET)
-    public List<com.books.model.Books> getBooks() {
+    public List<Books> getBooks() {
         return bookservice.showBooks();
     }
 
     @RequestMapping(value = "/books/{book_name}", method = RequestMethod.GET)
-    public com.books.model.Books getBookbyName(@PathVariable String book_name) throws Exception {
-        Optional<com.books.model.Books> book = bookservice.getBookByName(book_name);
-        return book.get();
+    public Books getBookbyName(@PathVariable String book_name) throws Exception {
+        return bookservice.getBookByName(book_name);
     }
 
-    @RequestMapping(value = "/book/add/{username}", method = RequestMethod.POST)
-    public Object addBook(@PathVariable String username, @RequestBody com.books.model.Books book) throws Exception {
-        Optional<Users> user = userservice.getUserByName(username);
-        Users user1 = user.get();
+    @RequestMapping(value = "/books/add/{username}", method = RequestMethod.POST)
+    public Books addBook(@PathVariable String username, @Valid @RequestBody Books book) throws Exception {
+        Users user = userservice.getUserByName(username);
         Books oldbook = getBookbyName(book.getBookname());
-        if (user1.getType().equals("admin")) {
+        if (user.getType().equals("admin")) {
             if (oldbook == null) {
                 return bookservice.addNewBook(book);
             } else {
@@ -39,7 +40,7 @@ public class BooksController {
                 return getBookbyName(oldbook.getBookname());
             }
         } else {
-            return ("You are not admin");
+            throw new UserNotAdminException("Username does not have admin credentials");
         }
     }
 

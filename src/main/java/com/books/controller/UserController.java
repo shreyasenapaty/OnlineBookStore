@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -23,8 +22,7 @@ public class UserController {
 
     @RequestMapping(value = "/users/{username}", method = RequestMethod.GET)
     public Users getUser(@PathVariable String username) throws Exception {
-        Optional<Users> user = userservice.getUserByName(username);
-        return user.get();
+        return userservice.getUserByName(username);
     }
 
 }

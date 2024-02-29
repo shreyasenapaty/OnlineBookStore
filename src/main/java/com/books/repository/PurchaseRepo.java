@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 
 @Repository
-public interface PurchaseRepo extends JpaRepository<Purchase,Integer> {
+public interface PurchaseRepo extends JpaRepository<Purchase, Integer> {
     @Transactional
     @Modifying
-    @Query(value="insert into purchase (username,bookname, purchase_date) values (?,?,?) ", nativeQuery = true)
+    @Query(value = "insert into purchase (username,bookname, purchase_date) values (?,?,?) ", nativeQuery = true)
     int UpdatePurchase(String username, String bookname, Date purchase_date);
+
+
 }

@@ -1,13 +1,16 @@
 package com.books.controller;
 
 
-import com.books.model.*;
-import com.books.service.*;
+import com.books.exceptions.UserNotAdminException;
+import com.books.model.Coupons;
+import com.books.model.Users;
+import com.books.service.CouponsService;
+import com.books.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CouponsController {
@@ -27,22 +30,20 @@ public class CouponsController {
     }
 
     @RequestMapping(value = "/coupons/add/{username}", method = RequestMethod.POST)
-    public Object addCoupon(@PathVariable String username, @RequestBody Coupons coupon) throws Exception {
-        Optional<Users> user = userservice.getUserByName(username);
-        Users user1 = user.get();
-        if (user1.getType().equals("admin")) {
+    public Coupons addCoupon(@PathVariable String username, @Valid @RequestBody Coupons coupon) throws Exception {
+        Users user = userservice.getUserByName(username);
+        if (user.getType().equals("admin")) {
             coupon.setLeftover_price(coupon.getPrice());
             return couponservice.addNewCoupon(coupon);
         } else {
-            return ("You are not admin");
+            throw new UserNotAdminException("Username does not have admin credentials");
         }
 
     }
 
     @RequestMapping(value = "/coupons/transfer/{username}/{couponno}", method = RequestMethod.PUT)
     public Coupons transfer(@PathVariable String username, @PathVariable Integer couponno) throws Exception {
-        Optional<Users> user = userservice.getUserByName(username);
-        Users user1 = user.get();
+        Users user = userservice.getUserByName(username);
         couponservice.updateCoupon(username, couponno);
         return couponservice.getCouponByNo(couponno);
     }
