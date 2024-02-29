@@ -11,18 +11,14 @@ import java.sql.Date;
 import java.util.List;
 
 @Repository
-public interface CouponsHistoryRepo extends JpaRepository<CouponHistory,Integer> {
+public interface CouponsHistoryRepo extends JpaRepository<CouponHistory, Integer> {
     @Transactional
     @Modifying
-    @Query(value="insert into coupon_history (coupon_no,value,date_used) values (?,?,?) ", nativeQuery = true)
-    int UpdateCoupHistory(Integer coupon_no, Double value, Date date_used);
+    @Query(value = "insert into coupon_history (coupon_no,p_id,value,date_used) values (?,?,?,?) ", nativeQuery = true)
+    int UpdateCoupHistory(Integer coupon_no, Integer p_id, Double value, Date date_used);
 
     @Query(value = "select * from coupon_history u where u.coupon_no = ? order by date_used asc",
             nativeQuery = true)
     List<CouponHistory> selectCouponHistory(int coupon_no);
 
-    @Transactional
-    @Modifying
-    @Query(value="update coupon_history set p_id= ? where coupon_no= ?", nativeQuery = true)
-    int SetPID(Integer p_id,Integer coupon_no);
 }

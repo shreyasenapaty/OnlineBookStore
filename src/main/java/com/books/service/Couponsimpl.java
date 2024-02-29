@@ -38,8 +38,8 @@ public class Couponsimpl implements CouponsService {
         return cdao.UpdatePrice(leftover_price, coupon_no);
     }
 
-    public Integer addCouponHistory(Integer coupon_no, Double value, Date date) {
-        return chdao.UpdateCoupHistory(coupon_no, value, date);
+    public Integer addCouponHistory(Integer coupon_no, Integer p_id, Double value, Date date) {
+        return chdao.UpdateCoupHistory(coupon_no, p_id, value, date);
     }
 
     public Integer updateCoupon(String user, Integer coupon_no) {

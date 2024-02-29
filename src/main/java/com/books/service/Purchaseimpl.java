@@ -17,6 +17,11 @@ public class Purchaseimpl implements PurchaseService {
         return pdao.UpdatePurchase(username, bookname, purchase_date);
     }
 
+    @Override
+    public Purchase findPurchase(String username, String bookname, Date purchase_date) {
+        return pdao.FindPurchase(username, bookname, purchase_date);
+    }
+
     public List<Purchase> showPurchase() {
         return pdao.findAll();
     }

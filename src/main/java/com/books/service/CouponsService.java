@@ -15,7 +15,7 @@ public interface CouponsService {
 
     public Coupons addNewCoupon(Coupons coupon);
 
-    public Integer addCouponHistory(Integer coupon_no, Double value, Date date);
+    public Integer addCouponHistory(Integer coupon_no, Integer p_id, Double value, Date date);
 
     public Integer updatePrice(Double leftover_price, Integer coupon_no);
 
