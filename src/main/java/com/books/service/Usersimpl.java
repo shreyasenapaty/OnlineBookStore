@@ -1,12 +1,12 @@
 package com.books.service;
 
+import com.books.exceptions.ResourceNotFound;
 import com.books.model.Users;
 import com.books.repository.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Usersimpl implements UsersService {
@@ -22,8 +22,9 @@ public class Usersimpl implements UsersService {
     }
 
     public Users getUserByName(String username) {
-        Optional<Users> user = udao.findById(username);
-        return user.get();
+        Users user = udao.findById(username)
+                .orElseThrow(() -> new ResourceNotFound("User not found with username " + username));
+        return user;
     }
 
     public Users deleteUserByName(String User) {

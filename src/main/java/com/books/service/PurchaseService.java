@@ -11,5 +11,5 @@ public interface PurchaseService {
 
     public Integer addNewPurchase(String username, String bookname, Date purchase_date);
 
-    Purchase findPurchase(String username, String bookname, Date purchase_date);
+    List<Purchase> findPurchase(String username, String bookname, Date purchase_date);
 }

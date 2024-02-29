@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface PurchaseRepo extends JpaRepository<Purchase, Integer> {
@@ -16,7 +17,7 @@ public interface PurchaseRepo extends JpaRepository<Purchase, Integer> {
     @Query(value = "insert into purchase (username,bookname, purchase_date) values (?,?,?) ", nativeQuery = true)
     int UpdatePurchase(String username, String bookname, Date purchase_date);
 
-    @Query(value = "select * from purchase u where u.username? AND u.bookname = ? AND u.date=? ",
+    @Query(value = "select * from purchase u where u.username = ? AND u.bookname = ? AND u.purchase_date=? order by purchase_date desc",
             nativeQuery = true)
-    Purchase FindPurchase(String username, String bookname, Date date);
+    List<Purchase> FindPurchase(String username, String bookname, Date date);
 }

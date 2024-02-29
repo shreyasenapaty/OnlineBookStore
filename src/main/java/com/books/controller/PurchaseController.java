@@ -29,7 +29,9 @@ public class PurchaseController {
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
         System.out.println(date);
-        if (book.getInventory() == 0) {
+        if (book == null) {
+            throw new UserNotAdminException("Book is not in store.");
+        } else if (book.getInventory() == 0) {
             throw new UserNotAdminException("Book is out of stock");
         } else {
             Double price = book.getPrice();
@@ -50,7 +52,7 @@ public class PurchaseController {
                 throw new UserNotAdminException("Not enough coupons");
             } else {
                 purchaseservice.addNewPurchase(username, bookname, date);
-                Purchase purchase = purchaseservice.findPurchase(username, bookname, date);
+                List<Purchase> purchase = purchaseservice.findPurchase(username, bookname, date);
                 Integer inventory = book.getInventory() - 1;
                 bookservice.updateInventory(inventory, bookname);
                 int i = 0;
@@ -63,11 +65,11 @@ public class PurchaseController {
                         leftover_price = 0.00;
                     }
                     couponservice.updatePrice(leftover_price, coup.get(i).getCoupon_no());
-                    couponservice.addCouponHistory(coup.get(i).getCoupon_no(), purchase.getP_id(), coup.get(i).getPrice() - leftover_price, date);
+                    couponservice.addCouponHistory(coup.get(i).getCoupon_no(), purchase.get(0).getP_id(), coup.get(i).getPrice() - leftover_price, date);
                     i++;
                 } while (price > 0);
 
-                return purchase;
+                return purchase.get(0);
             }
         }
     }
